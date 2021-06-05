@@ -1,10 +1,15 @@
 package core
 
-class Runner(private val codeParts: List<Executable> = ArrayList()) : IRunner {
+class Runner(private val modules: Modules) : IRunner {
 
     override fun run() {
-        for (code in codeParts) {
-            code.execute()
+        val codeParts = modules.map
+        for (entry in codeParts.entries) {
+            if (entry.value) {
+                println("/* ${entry.key.javaClass} start */")
+                entry.key.execute()
+                println("/* ${entry.key.javaClass} end */\n")
+            }
         }
     }
 }
